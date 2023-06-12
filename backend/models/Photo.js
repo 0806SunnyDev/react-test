@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const PhotoSchema = new mongoose.Schema({
   Name: {
@@ -21,6 +21,6 @@ const PhotoSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   }
-});
+})
 
-module.exports = mongoose.model('photo', PhotoSchema);
+module.exports = mongoose.model('photo', PhotoSchema)
