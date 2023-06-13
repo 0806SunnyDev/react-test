@@ -58,15 +58,15 @@ const DropzoneComponent = ({onUploaded}) => {
                 <IconButton
                   onClick={(event) => onDelete(file, event)}
                   size="small"
-                  color="secondary"
+                  color="primary"
                   sx={{
                     position: 'absolute',
                     bottom: 8,
                     right: '5%',
                     width: 50,
                     height: 50,
-                    // backgroundColor: "lightgrey",
-                    border: '2px solid lightgrey'
+                    backgroundColor: "lightgray",
+                    border: '2px solid lightgray'
                   }}
                 >
                   <DeleteIcon />

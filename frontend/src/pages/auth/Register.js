@@ -19,15 +19,16 @@ const Register = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
+    // const registerData = Object.assign({}, event.currentTarget, { photos: uploadedFiles })
+    // console.log(event.currentTarget.email.value)
     const data = new FormData(event.currentTarget)
     if (data.get('password') === data.get('confirmPassword') && (uploadedFiles.length >= 4)) {
-      console.log(uploadedFiles)
       dispatch(register({
         firstName: data.get('firstName'),
         lastName: data.get('lastName'),
         email: data.get('email'),
         password: data.get('password'),
-        avatars: uploadedFiles.map((item) => item.name).join(','),
+        photos: uploadedFiles,
       }))
     } else if (uploadedFiles.length < 4) {
       console.log('avatars number should be at least 4')
@@ -133,6 +134,7 @@ const Register = () => {
             </Grid>
           </Grid>
         </Box>
+        
       </Box>
     </Container>
   )

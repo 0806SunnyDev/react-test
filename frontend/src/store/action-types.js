@@ -5,6 +5,7 @@ export default mirrorKeys({
   LOGIN_FAIL: null,
   REGISTER_SUCCESS: null,
   REGISTER_FAIL: null,
+  LOGOUT: null,
 });
 
 function mirrorKeys(obj) {
