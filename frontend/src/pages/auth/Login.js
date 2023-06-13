@@ -14,30 +14,51 @@ import { login } from '../../store'
 const Login = () => {
   const dispatch = useDispatch()
 
-  // const [formData, setFormData] = useState({
-  //   email: '',
-  //   password: '',
-  // })
-
-  const [errors, setErrors] = useState({
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
     email: '',
     password: '',
-  })
+  });
 
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    const data = new FormData(event.currentTarget);
-    // if (data.get('email') === '') {
-    //   setErrors({email: 'Email is required!'})
-    // } else {
-      dispatch(
-        login({
-          email: data.get('email'),
-          password: data.get('password'),
-        })
-      )
-    // }
-  }
+  const handleChange = (event) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await fetch('/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+      console.log(data); // Handle the response data
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // const handleSubmit = (event) => {
+  //   event.preventDefault()
+  //   const data = new FormData(event.currentTarget);
+  //   // if (data.get('email') === '') {
+  //   //   setErrors({email: 'Email is required!'})
+  //   // } else {
+  //     dispatch(
+  //       login({
+  //         email: data.get('email'),
+  //         password: data.get('password'),
+  //       })
+  //     )
+  //   // }
+  // }
 
   // const validate = (data) => {
 
@@ -49,7 +70,7 @@ const Login = () => {
   // }
 
   return (
-    <Container component="main" maxWidth="md">
+    <Container component="main" maxWidth="lg">
       <Box
         sx={{
           marginTop: 8,
@@ -66,29 +87,23 @@ const Login = () => {
         </Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
           <TextField
-            margin="normal"
-            fullWidth
-            required
-            id="email"
+            margin='normal'
             label="Email Address"
-            type="email"
             name="email"
-            autoComplete="email"
-            error={Boolean(errors.email)}
-            helperText={errors.email}
+            type="email"
+            value={formData.firstName}
+            onChange={handleChange}
             autoFocus
+            fullWidth
           />
           <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
+            margin='normal'
             label="Password"
+            name="password"
             type="password"
-            id="password"
-            autoComplete="current-password"
-            error={Boolean(errors.password)}
-            helperText={errors.password}
+            value={formData.firstName}
+            onChange={handleChange}
+            fullWidth
           />
           <Button
             type="submit"
