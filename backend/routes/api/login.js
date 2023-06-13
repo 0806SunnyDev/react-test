@@ -21,14 +21,13 @@ router.post(
     }
 
     const { email, password } = req.body
+    console.log(email)
 
     try {
       let user = await User.findOne({ Email: email })
-
+      
       if (!user) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: 'Invalid Email!' }] })
+        return res.status(400).json({ errors: [{ msg: 'Invalid Email!' }] })
       }
 
       const isMatch = await bcrypt.compare(password, user.Password)

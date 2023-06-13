@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
@@ -10,6 +10,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { login } from '../../store'
+import { Navigate } from 'react-router-dom'
 
 const Login = () => {
   const dispatch = useDispatch()
@@ -23,6 +24,12 @@ const Login = () => {
     email: '',
     password: '',
   })
+  
+  const { isAuthenticated } = useSelector((state) => state.auth)
+
+  if (isAuthenticated) {
+    return <Navigate to="/profile" />;
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault()
