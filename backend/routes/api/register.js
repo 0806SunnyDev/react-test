@@ -10,6 +10,7 @@ const { check, validationResult } = require('express-validator')
 const User = require('../../models/User')
 const Photo = require('../../models/Photo')
 const Client = require('../../models/Client')
+const key = require('../../config/key')
 
 const storage = multer.diskStorage({
   destination: 'uploads/photos/',
@@ -83,6 +84,8 @@ router.post(
   ).isLength({ min: 6, max: 50 }),
   check('password', 'The password must contain at least one number').matches(/\d/),
   async (req, res) => {
+    console.log("hello")
+
     const errors = validationResult(req)
 
     if (!errors.isEmpty()) {
@@ -140,13 +143,13 @@ router.post(
 
       jwt.sign(
         payload,
-        'secretKey',
-        { expiresIn: '5 days' },
+        key.secretOrKey,
+        { expiresIn: '1h' },
         (err, token) => {
-          if (err) throw err
-          res.json({ token })
+          if (err) throw err;
+          res.json({ token: 'Bearer ' + token, success: true });
         }
-      )
+      );
     } catch (err) {
       console.error(err.message)
       res.status(500).send('Server error')

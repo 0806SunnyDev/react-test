@@ -5,7 +5,7 @@ import { Paper } from '@mui/material'
 const Item = ({image}) => {
     return (
         <Paper>
-            <img src={image} width="100%" />
+            <img src={image} width="100%" alt="photo" />
         </Paper>
     )
 }

@@ -2,12 +2,19 @@ import axios from 'axios';
 // import { store, logout } from '../store';
 
 // Create an instance of axios
-const api = axios.create({
+export const apiJson = axios.create({
   baseURL: 'http://localhost:5000/api',
   headers: {
     'Content-Type': 'application/json'
   }
 });
+
+export const apiFormData = axios.create({
+  baseURL: 'http://localhost:5000/api',
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  }
+})
 
 // api.interceptors.response.use(
 //   (res) => res,
@@ -18,5 +25,3 @@ const api = axios.create({
 //     return Promise.reject(err);
 //   }
 // );
-
-export default api;

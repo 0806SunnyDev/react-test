@@ -7,7 +7,7 @@ import Auth from './pages/auth'
 import Profile from './pages/profile'
 import Navbar from './pages/layout/Navbar'
 import Login from './pages/auth/Login'
-import Register from './pages/auth/Register'
+import RegisterForm from './pages/auth/RegisterForm'
 import NotFound from './pages/layout/NotFound'
 import { loadUser, logout, store } from './store'
 import setAuthToken from './utils/setAuthToken'
@@ -36,7 +36,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Auth />} />
         <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
+        <Route path="register" element={<RegisterForm />} />
         <Route
           path="profile"
           element={<PrivateRoute component={Profile} />}

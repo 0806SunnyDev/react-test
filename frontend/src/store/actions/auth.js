@@ -1,10 +1,10 @@
-import api from '../../utils/api';
+import { apiJson, apiFormData } from '../../utils/api';
 import types from '../action-types'
 import setAuthToken from '../../utils/setAuthToken'
 
 export const loadUser = () => async (dispatch) => {
   try {
-    const res = await api.get('/users/me')
+    const res = await apiJson.get('/users/me')
 
     dispatch({
       type: types.USER_LOADED,
@@ -19,7 +19,7 @@ export const loadUser = () => async (dispatch) => {
 
 export const register = (data) => async (dispatch) => {
   try {
-    const res = await api.post('/register', data);
+    const res = await apiFormData.post('/register', data);
     console.log('register data', data)
 
     dispatch({
@@ -41,7 +41,7 @@ export const register = (data) => async (dispatch) => {
 
 export const login = (data) => async (dispatch) => {
   try {
-    const res = await api.post('/login', data);
+    const res = await apiJson.post('/login', data);
     console.log('token: ', res.data)
 
     dispatch({

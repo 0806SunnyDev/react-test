@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken')
 const { check, validationResult } = require('express-validator')
 
 const User = require('../../models/User')
+const key = require('../../config/key')
 
 // Login
 // POST api/login
@@ -46,13 +47,13 @@ router.post(
 
       jwt.sign(
         payload,
-        'secretKey',
-        { expiresIn: '5 days' },
+        key.secretOrKey,
+        { expiresIn: '1h' },
         (err, token) => {
-          if (err) throw err
-          res.json({ token })
+          if (err) throw err;
+          res.json({ token: 'Bearer ' + token, success: true });
         }
-      )
+      );
     } catch (err) {
       console.error(err.message)
       res.status(500).send('Server error')
