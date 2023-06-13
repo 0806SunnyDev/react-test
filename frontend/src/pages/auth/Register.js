@@ -13,6 +13,14 @@ import { useDispatch } from 'react-redux'
 import { register } from '../../store'
 
 const Register = () => {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    photos: [],
+  });
+  
   const [uploadedFiles, setUploadedFiles] = useState([])
 
   const dispatch = useDispatch()
