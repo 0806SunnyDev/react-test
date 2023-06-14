@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { Navigate } from 'react-router-dom'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
@@ -10,64 +11,82 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { login } from '../../store'
+import { isValidEmail } from '../../utils/validator'
 
-const Login = () => {
+const Login = ({isAuthenticated}) => {
   const dispatch = useDispatch()
 
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
     email: '',
     password: '',
   });
 
+  const [errors, setErrors] = useState({
+    email: '',
+    password: '',
+  });
+
+  if (isAuthenticated) {
+    return <Navigate to="/profile" />;
+  }
+
   const handleChange = (event) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      [event.target.name]: event.target.value,
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
     }));
+
+    validateField(name, value);
+  };
+
+  const validateField = (fieldName, value) => {
+    let errorMessage = '';
+  
+    if (fieldName === 'email') {
+      if (!value) {
+        errorMessage = 'Email is required.';
+      } else if (!isValidEmail(value)) {
+        errorMessage = 'Invalid email address.';
+      }
+    }
+  
+    if (fieldName === 'password') {
+      if (!value) {
+        errorMessage = 'Password is required.';
+      } else if (value.length < 6) {
+        errorMessage = 'Password case number is at least 6'
+      }
+      
+    }
+  
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [fieldName]: errorMessage,
+    }));
+  };
+
+  const validateForm = () => {
+    let formIsValid = true;
+  
+    validateField('email', formData.email);
+    validateField('password', formData.password);
+  
+    if (errors.email || errors.password) {
+      formIsValid = false;
+    }
+  
+    return formIsValid;
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
-      const response = await fetch('/api/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-      const data = await response.json();
-      console.log(data); // Handle the response data
-    } catch (error) {
-      console.error(error);
+    const formIsValid = validateForm();
+
+    if (formIsValid) {
+      await dispatch(login(formData))
     }
   };
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault()
-  //   const data = new FormData(event.currentTarget);
-  //   // if (data.get('email') === '') {
-  //   //   setErrors({email: 'Email is required!'})
-  //   // } else {
-  //     dispatch(
-  //       login({
-  //         email: data.get('email'),
-  //         password: data.get('password'),
-  //       })
-  //     )
-  //   // }
-  // }
-
-  // const validate = (data) => {
-
-  // }
-
-  // const handleInputChange = (event) => {
-  //   const {name, value} = event.target
-  //   setFormData({ ...formData, [name]: value })
-  // }
 
   return (
     <Container component="main" maxWidth="lg">
@@ -91,8 +110,10 @@ const Login = () => {
             label="Email Address"
             name="email"
             type="email"
-            value={formData.firstName}
+            value={formData.email}
             onChange={handleChange}
+            error={!!errors.email}
+            helperText={errors.email}
             autoFocus
             fullWidth
           />
@@ -101,8 +122,10 @@ const Login = () => {
             label="Password"
             name="password"
             type="password"
-            value={formData.firstName}
+            value={formData.password}
             onChange={handleChange}
+            error={!!errors.password}
+            helperText={errors.password}
             fullWidth
           />
           <Button

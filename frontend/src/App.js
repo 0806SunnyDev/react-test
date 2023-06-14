@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Route, Routes } from 'react-router-dom'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
@@ -7,8 +7,8 @@ import Auth from './pages/auth'
 import Profile from './pages/profile'
 import Navbar from './pages/layout/Navbar'
 import Login from './pages/auth/Login'
-import RegisterForm from './pages/auth/RegisterForm'
-import NotFound from './pages/layout/NotFound'
+import Register from './pages/auth/Register'
+import Notification from './pages/layout/Notification'
 import { loadUser, logout, store } from './store'
 import setAuthToken from './utils/setAuthToken'
 import PrivateRoute from './pages/routing/PrivateRoute'
@@ -16,6 +16,7 @@ import PrivateRoute from './pages/routing/PrivateRoute'
 const defaultTheme = createTheme();
 
 const App = () => {
+  const { isAuthenticated } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -30,18 +31,21 @@ const App = () => {
     });
   }, []);
 
+  
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Auth />} />
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<RegisterForm />} />
+        <Route path="/" element={<Auth isAuthenticated={isAuthenticated} />} />
+        <Route path="login" element={<Login isAuthenticated={isAuthenticated} />} />
+        <Route path="register" element={<Register isAuthenticated={isAuthenticated} />} />
         <Route
           path="profile"
           element={<PrivateRoute component={Profile} />}
         />
-        <Route path="/*" element={<NotFound />} />
+        <Route path="success" element={<Notification title="Success" />} />
+        <Route path="/*" element={<Notification title="NotFound" />} />
       </Routes>
     </ThemeProvider>  
   )

@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
 import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
@@ -9,9 +8,7 @@ import Container from '@mui/material/Container'
 import Link from '@mui/material/Link'
 import Grid from '@mui/material/Grid'
 
-const Auth = () => {
-  const { isAuthenticated } = useSelector((state) => state.auth)
-
+const Auth = ({isAuthenticated}) => {
   if (isAuthenticated) {
     return <Navigate to="/profile" />;
   }

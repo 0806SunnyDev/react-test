@@ -17,10 +17,10 @@ export const loadUser = () => async (dispatch) => {
   }
 }
 
-export const register = (data) => async (dispatch) => {
+export const register = (formData) => async (dispatch) => {
+  console.log('register formData in action: ', formData)
   try {
-    const res = await apiFormData.post('/register', data);
-    console.log('register data', data)
+    const res = await apiFormData.post('/register', formData);
 
     dispatch({
       type: types.REGISTER_SUCCESS,
@@ -51,7 +51,7 @@ export const login = (data) => async (dispatch) => {
 
     setAuthToken(res.data.token)
 
-    dispatch(loadUser());
+    await dispatch(loadUser());
   } catch (err) {
     const errors = err.response.data.errors;
 

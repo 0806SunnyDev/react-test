@@ -15,10 +15,33 @@ const Navbar = () => {
     dispatch(logout())
   }
 
-  const logoutLink = (
-    <Link onClick={onLogout} href='#!' variant="body2" color="inherit" underline="none">
-      Logout
-    </Link>
+  const authLink = (
+    <ul
+      style={{
+        display: 'flex'
+      }}
+    >
+      <li
+        style={{
+          listStyleType: 'none',
+          width: 60
+        }}
+      >
+        <Link href='profile' variant="body2" color="inherit" underline="none">
+          Profile
+        </Link>
+      </li>
+      <li
+        style={{
+          listStyleType: 'none',
+          width: 60
+        }}
+      >
+        <Link onClick={onLogout} href='#!' variant="body2" color="inherit" underline="none">
+          Logout
+        </Link>
+      </li>
+    </ul>
   );
 
   return (
@@ -31,7 +54,7 @@ const Navbar = () => {
               React Skill Test
             </Typography>
           </Link>
-          {isAuthenticated && logoutLink}
+          {isAuthenticated && authLink}
         </Toolbar>
       </AppBar>
     </>

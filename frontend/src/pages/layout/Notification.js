@@ -2,7 +2,18 @@ import * as React from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
-const NotFound = () => {
+const Notification = ({title}) => {
+  let text
+
+  switch (title) {
+    case 'Success':
+      text = 'Success!'
+      break;
+    default:
+      text = 'Oops! Page Not Found!'
+      break;
+  }
+
   return (
     <main>
       <Box
@@ -18,11 +29,11 @@ const NotFound = () => {
             color="text.primary"
             gutterBottom
           >
-            Oops! Page Not Found!
+            {text}
           </Typography>
       </Box>
     </main>
   )
 }
 
-export default NotFound
+export default Notification

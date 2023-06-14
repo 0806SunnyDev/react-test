@@ -55,6 +55,7 @@ router.post(
   '/',
   (req, res, next) => {
     upload.array('photos')(req, res, function (err) {
+      console.log("Hello!!!")
       if (err instanceof multer.MulterError) {
         return res.status(400).json({ error: 'Multer error: ' + err.message })
       } else if (err) {
@@ -77,6 +78,7 @@ router.post(
     'lastName',
     'Please enter a last name with from 2 to 25 characters'
   ).isLength({ min: 2, max: 25 }),
+  check('email', 'email is required').notEmpty(),
   check('email', 'Please include a valid email').isEmail(),
   check(
     'password',
