@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Route, Routes } from 'react-router-dom'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
@@ -12,11 +12,15 @@ import Notification from './pages/layout/Notification'
 import { loadUser, logout, store } from './store'
 import setAuthToken from './utils/setAuthToken'
 import PrivateRoute from './pages/routing/PrivateRoute'
+import Toast from './components/Toast'
 
 const defaultTheme = createTheme();
 
 const App = () => {
+  const [toastOpen, setToastOpen] = useState(false);
   const { isAuthenticated } = useSelector((state) => state.auth)
+  const alert = useSelector((state) => state.alert)
+  // const alert = 'alert'
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -29,13 +33,20 @@ const App = () => {
     window.addEventListener('storage', () => {
       if (!localStorage.token) store.dispatch(logout());
     });
-  }, []);
+  }, [dispatch]);
 
-  
+  useEffect(() => {
+    setToastOpen(true)
+  }, [])
+
+  const handleCloseToast = () => {
+    setToastOpen(false)
+  }
 
   return (
     <ThemeProvider theme={defaultTheme}>
       <Navbar />
+      <Toast open={toastOpen} message={alert} onClose={handleCloseToast} />
       <Routes>
         <Route path="/" element={<Auth isAuthenticated={isAuthenticated} />} />
         <Route path="login" element={<Login isAuthenticated={isAuthenticated} />} />

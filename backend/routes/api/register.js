@@ -55,7 +55,6 @@ router.post(
   '/',
   (req, res, next) => {
     upload.array('photos')(req, res, function (err) {
-      console.log("Hello!!!")
       if (err instanceof multer.MulterError) {
         return res.status(400).json({ error: 'Multer error: ' + err.message })
       } else if (err) {
@@ -86,7 +85,6 @@ router.post(
   ).isLength({ min: 6, max: 50 }),
   check('password', 'The password must contain at least one number').matches(/\d/),
   async (req, res) => {
-    console.log("hello")
 
     const errors = validationResult(req)
 

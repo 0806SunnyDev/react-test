@@ -155,7 +155,6 @@ const Register = ({isAuthenticated}) => {
       for (let i = 0; i < formData.photos.length; i++) {
         data.append('photos', formData.photos[i]);
       }
-      console.log('register data: ', data)
       dispatch(register(data))
     } else {
       console.log("Form Error")

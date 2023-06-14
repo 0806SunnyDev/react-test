@@ -15,13 +15,14 @@ router.get('/me',
   passport.authenticate('jwt', { session: false }),
   async (req, res) => {
     let userId = req.user.id
-    
+
     try {
       const user = await User.findById(userId).select('-password')
       const photo = await Photo.find({User: userId})
       const client = await Client.find({User: userId})
+      const clientData = client[0]
 
-      res.json({ message: 'Data retrieved successfully', data: [user, client, photo] });
+      res.json({ message: 'Data retrieved successfully', data: {user, clientData, photo} });
     } catch (error) {
       console.log(error.message)
       res.status(500).send('Server Error')

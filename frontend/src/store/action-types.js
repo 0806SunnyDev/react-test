@@ -1,4 +1,5 @@
 export default mirrorKeys({
+  SET_ALERT: null,
   USER_LOADED: null,
   AUTH_ERROR: null,
   LOGIN_SUCCESS: null,
