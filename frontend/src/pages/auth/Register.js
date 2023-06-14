@@ -1,6 +1,15 @@
+import {
+  Container, 
+  Grid, 
+  Box, 
+  Typography, 
+  TextField, 
+  Button, 
+  Avatar, 
+  Link 
+} from '@mui/material';
 import React, { useState, useCallback } from 'react';
 import { Navigate } from 'react-router-dom'
-import { Container, Grid, Box, Typography, TextField, Button, Avatar, Link } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import { useDropzone } from 'react-dropzone';
 import { useDispatch } from 'react-redux';
@@ -31,8 +40,15 @@ const Register = ({isAuthenticated}) => {
   const onDrop = useCallback((acceptedFiles) => {
     setFormData((prevData) => ({
       ...prevData,
-      photos: acceptedFiles,
+      photos: [...prevData.photos, ...acceptedFiles],
     }));
+
+    if (formData.photos.length > 3) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        photos: null,
+      }));
+    }
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
@@ -58,9 +74,9 @@ const Register = ({isAuthenticated}) => {
 
     if (fieldName === 'firstName' || fieldName === 'lastName') {
       if (!value) {
-        errorMessage = `${fieldName} is required.`
+        errorMessage = `Name field is required.`
       } else if (value.length < 2 || value.length > 25) {
-        errorMessage = `${fieldName} must be at between 2 and 25.`
+        errorMessage = `Name field must be at between 2 and 25.`
       }
     }
   

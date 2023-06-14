@@ -18,8 +18,9 @@ const defaultTheme = createTheme();
 
 const App = () => {
   const [toastOpen, setToastOpen] = useState(false);
+  const [toastSeverity, setToastSeverity] = useState('info');
   const { isAuthenticated } = useSelector((state) => state.auth)
-  const alert = useSelector((state) => state.alert)
+  const { alert, severity } = useSelector((state) => state.alert)
   // const alert = 'alert'
   const dispatch = useDispatch()
 
@@ -36,8 +37,9 @@ const App = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    setToastOpen(true)
-  }, [])
+      alert && setToastOpen(true)
+      setToastSeverity(severity)
+  }, [alert, severity])
 
   const handleCloseToast = () => {
     setToastOpen(false)
@@ -46,7 +48,7 @@ const App = () => {
   return (
     <ThemeProvider theme={defaultTheme}>
       <Navbar />
-      <Toast open={toastOpen} message={alert} onClose={handleCloseToast} />
+      <Toast open={toastOpen} message={alert} severity={toastSeverity} onClose={handleCloseToast} />
       <Routes>
         <Route path="/" element={<Auth isAuthenticated={isAuthenticated} />} />
         <Route path="login" element={<Login isAuthenticated={isAuthenticated} />} />

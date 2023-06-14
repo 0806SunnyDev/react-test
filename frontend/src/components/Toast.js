@@ -1,16 +1,19 @@
 import React from 'react';
-import { Snackbar } from '@mui/material';
+import { Snackbar, Alert } from '@mui/material';
 
-const Toast = ({ open, message, onClose }) => {
+const Toast = ({ open, message, severity, onClose }) => {
   console.log('alert: ', message)
 
   return (
     <Snackbar
-      open={open}
-      autoHideDuration={3000}
+      open={open} 
+      autoHideDuration={3000} 
       onClose={onClose}
-      message={message}
-    />
+      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
+      <Alert onClose={onClose} severity={severity} action={null}>
+        {message}
+      </Alert>
+    </Snackbar>
   );
 };
 

@@ -113,11 +113,11 @@ router.post(
 
       const salt = await bcrypt.genSalt(10)
       user.Password = await bcrypt.hash(password, salt)
-      await user.save()
-
       const avatar = await getAvatar(firstName)
       const photos = req.files
       let photoNameArr = photos.map((photo) => photo.filename)
+      
+      await user.save()
 
       let client = new Client({
         User: user.id,

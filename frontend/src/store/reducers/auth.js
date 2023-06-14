@@ -27,6 +27,8 @@ function authReducer(state = initialState, action) {
         loading: false
       };
     case types.AUTH_ERROR:
+    case types.REGISTER_FAIL:
+    case types.LOGIN_FAIL:
     case types.LOGOUT:
       return {
         ...state,

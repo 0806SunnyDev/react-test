@@ -13,7 +13,7 @@ export const loadUser = () => async (dispatch) => {
 
     dispatch({
       type: types.SET_ALERT,
-      payload: res.data.message
+      payload: { alert: res.data.message, severity: 'success' }
     })
   } catch (err) {
     dispatch({
@@ -22,7 +22,7 @@ export const loadUser = () => async (dispatch) => {
 
     dispatch({
       type: types.SET_ALERT,
-      payload: 'Please Login...'
+      payload: { alert: 'Please Login...', severity: 'info' }
     })
   }
 }
@@ -31,7 +31,7 @@ export const register = (formData) => async (dispatch) => {
   try {
     dispatch({
       type: types.SET_ALERT,
-      payload: 'Please Wait...'
+      payload: { alert: 'Please Wait...', severity: 'info' }
     })
 
     const res = await apiFormData.post('/register', formData);
@@ -43,22 +43,32 @@ export const register = (formData) => async (dispatch) => {
 
     dispatch({
       type: types.SET_ALERT,
-      payload: 'Register Suceess!'
+      payload: { alert: 'Register Success!', severity: 'success' }
     })
 
     setAuthToken(res.data.token)
 
     dispatch(loadUser());
   } catch (err) {
+    dispatch({
+      type: types.REGISTER_FAIL
+    })
+
     const errors = err.response.data.errors;
+    console.log('errors: ', err)
 
     if (errors) {
       errors.forEach((error) => {
         dispatch({
           type: types.SET_ALERT,
-          payload: error.msg
+          payload: { alert: error.msg, severity: 'error' }
         })
       });
+    } else {
+      dispatch({
+        type: types.SET_ALERT,
+        payload: { alert: 'Check Your Internet Connection', severity: 'error' }
+      })
     }
   }
 }
@@ -67,7 +77,7 @@ export const login = (data) => async (dispatch) => {
   try {
     dispatch({
       type: types.SET_ALERT,
-      payload: 'Please Wait...'
+      payload: { alert: 'Please Wait...', severity: 'info' }
     })
 
     const res = await apiJson.post('/login', data);
@@ -79,17 +89,31 @@ export const login = (data) => async (dispatch) => {
 
     dispatch({
       type: types.SET_ALERT,
-      payload: 'User Logged in!'
+      payload: { alert: 'User Logged in!', severity: 'success' }
     })
 
     setAuthToken(res.data.token)
 
     dispatch(loadUser());
   } catch (err) {
+    dispatch({
+      type: types.LOGIN_FAIL
+    })
+
     const errors = err.response.data.errors;
 
     if (errors) {
-      errors.forEach((error) => console.log(error.msg));
+      errors.forEach((error) => {
+        dispatch({
+          type: types.SET_ALERT,
+          payload: { alert: error.msg, severity: 'error' }
+        })
+      });
+    } else {
+      dispatch({
+        type: types.SET_ALERT,
+        payload: { alert: 'Check Your Internet Connection', severity: 'error' }
+      })
     }
   }
 }
@@ -101,7 +125,7 @@ export const logout = () => async (dispatch) => {
 
   dispatch({
     type: types.SET_ALERT,
-    payload: 'User logged out!'
+    payload: { alert: 'User logged out!', severity: 'info' }
   })
   
   setAuthToken(null)
