@@ -60,7 +60,7 @@ const App = () => {
           path="profile"
           element={<PrivateRoute component={Profile} />}
         />
-        <Route path="success" element={<Notification title="Success" />} />
+        <Route path="register-success" element={<Notification title="Success" />} />
         <Route path="/*" element={<Notification title="NotFound" />} />
       </Routes>
     </ThemeProvider>  

@@ -19,12 +19,12 @@ const Header = () => {
 
   const authLink = (
     <ul style={{ display: 'flex' }}>
-      <li style={{ listStyleType: 'none', width: 60 }}>
+      <li style={{ listStyleType: 'none', width: 80 }}>
         <Link href="profile" variant="body2" color="inherit" underline="none">
           Profile
         </Link>
       </li>
-      <li style={{ listStyleType: 'none', width: 60 }}>
+      <li style={{ listStyleType: 'none', width: 80 }}>
         <Link
           href="#"
           onClick={onLogout}
@@ -32,6 +32,21 @@ const Header = () => {
           color="inherit"
           underline="none"
         >Logout</Link>
+      </li>
+    </ul>
+  )
+
+  const guestLink = (
+    <ul style={{ display: 'flex' }}>
+      <li style={{ listStyleType: 'none', width: 80 }}>
+        <Link href="register" variant="body2" color="inherit" underline="none">
+          Register
+        </Link>
+      </li>
+      <li style={{ listStyleType: 'none', width: 80 }}>
+        <Link href="login" variant="body2" color="inherit" underline="none">
+          Login
+        </Link>
       </li>
     </ul>
   )
@@ -46,7 +61,7 @@ const Header = () => {
               React Skill Test
             </Typography>
           </Link>
-          {isAuthenticated && authLink}
+          {isAuthenticated ? authLink : guestLink}
         </Toolbar>
       </AppBar>
     </>

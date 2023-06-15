@@ -27,7 +27,7 @@ export const loadUser = () => async (dispatch) => {
   }
 }
 
-export const register = (formData) => async (dispatch) => {
+export const register = (formData, navigation) => async (dispatch) => {
   try {
     dispatch({
       type: types.SET_ALERT,
@@ -35,6 +35,8 @@ export const register = (formData) => async (dispatch) => {
     })
 
     const res = await apiFormData.post('/register', formData)
+    
+    window.location.href = 'http://localhost:3000/register-success'
 
     dispatch({
       type: types.REGISTER_SUCCESS,
@@ -54,16 +56,15 @@ export const register = (formData) => async (dispatch) => {
       type: types.REGISTER_FAIL
     })
 
-    const errors = err.response.data.errors
-    console.log('errors: ', err)
+    const errors = err.response.data?.errors
 
     if (errors) {
-      errors.forEach((error) => {
-        dispatch({
-          type: types.SET_ALERT,
-          payload: { alert: error.msg, severity: 'error' }
-        })
+      // errors.forEach((error) => {
+      dispatch({
+        type: types.SET_ALERT,
+        payload: { alert: errors, severity: 'error' }
       })
+      // })
     } else {
       dispatch({
         type: types.SET_ALERT,
@@ -106,7 +107,7 @@ export const login = (data) => async (dispatch) => {
       errors.forEach((error) => {
         dispatch({
           type: types.SET_ALERT,
-          payload: { alert: error.msg, severity: 'error' }
+          payload: { alert: error, severity: 'error' }
         })
       })
     } else {

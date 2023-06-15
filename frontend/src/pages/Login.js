@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
@@ -12,6 +12,15 @@ import { login } from '../store'
 
 const Login = () => {
   const dispatch = useDispatch()
+  const serverErrors = useSelector(state => state.alert)
+
+  useEffect(() => {
+    setErrors(prevErrors => ({
+      ...prevErrors,
+      ...serverErrors,
+    }))
+    console.log('server errors =>', serverErrors)
+  }, [serverErrors])
 
   const [formData, setFormData] = useState({
     email: '',

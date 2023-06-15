@@ -11,20 +11,23 @@ const getAvatar = require('../utils/getAvatar')
 // Register Controller
 const register = async (req, res) => {
   const errors = validationResult(req)
-
+  
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() })
   }
 
   const { firstName, lastName, email, password } = req.body
-
+  
   try {
     let user = await User.findOne({ Email: email })
-
+    
     if (user) {
+      console.log('req.body =>', req.body)
       return res
-        .status(400)
-        .json({ errors: [{ msg: 'User already exists' }] })
+        .status(409)
+        .json({
+          errors: { errorType: 'email', msg: 'User already exists' }
+        })
     }
 
     user = new User({
@@ -93,7 +96,9 @@ const login = async (req, res) => {
     let user = await User.findOne({ Email: email })
     
     if (!user) {
-      return res.status(400).json({ errors: [{ msg: 'Invalid Email!' }] })
+      return res.status(400).json({ 
+        errors: [{ errorType: 'email', msg: 'Invalid Email!' }] 
+      })
     }
 
     const isMatch = await bcrypt.compare(password, user.Password)
@@ -101,7 +106,9 @@ const login = async (req, res) => {
     if (!isMatch) {
       return res
         .status(400)
-        .json({ errors: [{ msg: 'Invalid Password!' }] })
+        .json({ 
+          errors: [{ errorType: 'password', msg: 'Invalid Password!' }] 
+        })
     }
 
     const payload = {
