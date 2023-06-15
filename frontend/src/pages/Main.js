@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { Navigate } from 'react-router-dom'
 import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
 import Box from '@mui/material/Box'
@@ -8,11 +7,7 @@ import Container from '@mui/material/Container'
 import Link from '@mui/material/Link'
 import Grid from '@mui/material/Grid'
 
-const Auth = ({isAuthenticated}) => {
-  if (isAuthenticated) {
-    return <Navigate to="/profile" />;
-  }
-
+const Main = () => {
   return (
     <Container maxWidth="sm">
       <Box
@@ -51,4 +46,4 @@ const Auth = ({isAuthenticated}) => {
   )
 }
 
-export default Auth
+export default Main

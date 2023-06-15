@@ -1,9 +1,7 @@
-import React from 'react';
-import { Snackbar, Alert } from '@mui/material';
+import React from 'react'
+import { Snackbar, Alert } from '@mui/material'
 
 const Toast = ({ open, message, severity, onClose }) => {
-  console.log('alert: ', message)
-
   return (
     <Snackbar
       open={open} 
@@ -14,7 +12,7 @@ const Toast = ({ open, message, severity, onClose }) => {
         {message}
       </Alert>
     </Snackbar>
-  );
-};
+  )
+}
 
-export default Toast;
+export default Toast

@@ -7,14 +7,14 @@ export default mirrorKeys({
   REGISTER_SUCCESS: null,
   REGISTER_FAIL: null,
   LOGOUT: null,
-});
+})
 
 function mirrorKeys(obj) {
-  const mirroredObject = {};
+  const mirroredObject = {}
   for (const key in obj) {
     if (obj.hasOwnProperty(key)) {
-      mirroredObject[key] = key;
+      mirroredObject[key] = key
     }
   }
-  return mirroredObject;
+  return mirroredObject
 }

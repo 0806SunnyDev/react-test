@@ -8,10 +8,10 @@ const Notification = ({title}) => {
   switch (title) {
     case 'Success':
       text = 'Success!'
-      break;
+      break
     default:
       text = 'Oops! Page Not Found!'
-      break;
+      break
   }
 
   return (

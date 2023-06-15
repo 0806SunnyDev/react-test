@@ -1,16 +1,16 @@
-import types from '../action-types';
+import types from '../actionTypes'
 
-const initialState = {};
+const initialState = {}
 
 function alertReducer(state = initialState, action) {
-  const { type, payload } = action;
+  const { type, payload } = action
 
   switch (type) {
     case types.SET_ALERT:
-      return payload;
+      return payload
     default:
-      return state;
+      return state
   }
 }
 
-export default alertReducer;
+export default alertReducer

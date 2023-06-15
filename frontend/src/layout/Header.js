@@ -4,10 +4,10 @@ import CssBaseline from '@mui/material/CssBaseline'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import Link from '@mui/material/Link'
-import { logout } from '../../store'
+import { logout } from '../store'
 import { useDispatch, useSelector } from 'react-redux'
 
-const Navbar = () => {
+const Header = () => {
   const { isAuthenticated } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
 
@@ -42,7 +42,7 @@ const Navbar = () => {
         </Link>
       </li>
     </ul>
-  );
+  )
 
   return (
     <>
@@ -61,4 +61,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export default Header

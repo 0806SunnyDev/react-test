@@ -1,16 +1,16 @@
-import axios from 'axios';
-// import { store, logout } from '../store';
+import axios from 'axios'
+// import { store, logout } from '../store'
 
 // Create an instance of axios
 export const apiJson = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: 'http://localhost:8000/api',
   headers: {
     'Content-Type': 'application/json'
   }
-});
+})
 
 export const apiFormData = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: 'http://localhost:8000/api',
   headers: {
     'Content-Type': 'multipart/form-data'
   }
@@ -20,8 +20,8 @@ export const apiFormData = axios.create({
 //   (res) => res,
 //   (err) => {
 //     if (err.response.status === 401) {
-//       store.dispatch(logout());
+//       store.dispatch(logout())
 //     }
-//     return Promise.reject(err);
+//     return Promise.reject(err)
 //   }
-// );
+// )

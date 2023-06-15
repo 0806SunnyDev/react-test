@@ -1,4 +1,4 @@
-import types from '../action-types';
+import types from '../actionTypes'
 
 export const setAlert = (alert, severity) => dispatch => {
   dispatch({
@@ -7,5 +7,5 @@ export const setAlert = (alert, severity) => dispatch => {
       alert: alert,
       severity: severity
     }
-  });
-};
+  })
+}

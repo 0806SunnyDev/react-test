@@ -1,5 +1,5 @@
-import { apiJson, apiFormData } from '../../utils/api';
-import types from '../action-types'
+import { apiJson, apiFormData } from '../../utils/api'
+import types from '../actionTypes'
 import setAuthToken from '../../utils/setAuthToken'
 
 export const loadUser = () => async (dispatch) => {
@@ -9,7 +9,7 @@ export const loadUser = () => async (dispatch) => {
     dispatch({
       type: types.USER_LOADED,
       payload: res.data
-    });
+    })
 
     dispatch({
       type: types.SET_ALERT,
@@ -18,7 +18,7 @@ export const loadUser = () => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: types.AUTH_ERROR
-    });
+    })
 
     dispatch({
       type: types.SET_ALERT,
@@ -34,12 +34,12 @@ export const register = (formData) => async (dispatch) => {
       payload: { alert: 'Please Wait...', severity: 'info' }
     })
 
-    const res = await apiFormData.post('/register', formData);
+    const res = await apiFormData.post('/register', formData)
 
     dispatch({
       type: types.REGISTER_SUCCESS,
       payload: res.data
-    });
+    })
 
     dispatch({
       type: types.SET_ALERT,
@@ -48,13 +48,13 @@ export const register = (formData) => async (dispatch) => {
 
     setAuthToken(res.data.token)
 
-    dispatch(loadUser());
+    dispatch(loadUser())
   } catch (err) {
     dispatch({
       type: types.REGISTER_FAIL
     })
 
-    const errors = err.response.data.errors;
+    const errors = err.response.data.errors
     console.log('errors: ', err)
 
     if (errors) {
@@ -63,7 +63,7 @@ export const register = (formData) => async (dispatch) => {
           type: types.SET_ALERT,
           payload: { alert: error.msg, severity: 'error' }
         })
-      });
+      })
     } else {
       dispatch({
         type: types.SET_ALERT,
@@ -80,12 +80,12 @@ export const login = (data) => async (dispatch) => {
       payload: { alert: 'Please Wait...', severity: 'info' }
     })
 
-    const res = await apiJson.post('/login', data);
+    const res = await apiJson.post('/login', data)
 
     dispatch({
       type: types.LOGIN_SUCCESS,
       payload: res.data
-    });
+    })
 
     dispatch({
       type: types.SET_ALERT,
@@ -94,13 +94,13 @@ export const login = (data) => async (dispatch) => {
 
     setAuthToken(res.data.token)
 
-    dispatch(loadUser());
+    dispatch(loadUser())
   } catch (err) {
     dispatch({
       type: types.LOGIN_FAIL
     })
 
-    const errors = err.response.data.errors;
+    const errors = err.response.data.errors
 
     if (errors) {
       errors.forEach((error) => {
@@ -108,7 +108,7 @@ export const login = (data) => async (dispatch) => {
           type: types.SET_ALERT,
           payload: { alert: error.msg, severity: 'error' }
         })
-      });
+      })
     } else {
       dispatch({
         type: types.SET_ALERT,

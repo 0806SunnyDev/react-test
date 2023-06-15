@@ -1,11 +1,11 @@
-import types from '../action-types'
+import types from '../actionTypes'
 
 const initialState = {
   token: localStorage.getItem('token'),
   isAuthenticated: null,
   loading: true,
   user: null
-};
+}
 
 function authReducer(state = initialState, action) {
   const { type, payload } = action
@@ -17,7 +17,7 @@ function authReducer(state = initialState, action) {
         isAuthenticated: true,
         loading: false,
         user: payload
-      };
+      }
     case types.REGISTER_SUCCESS:
     case types.LOGIN_SUCCESS:
       return {
@@ -25,7 +25,7 @@ function authReducer(state = initialState, action) {
         ...payload,
         isAuthenticated: true,
         loading: false
-      };
+      }
     case types.AUTH_ERROR:
     case types.REGISTER_FAIL:
     case types.LOGIN_FAIL:
@@ -36,9 +36,9 @@ function authReducer(state = initialState, action) {
         isAuthenticated: false,
         loading: false,
         user: null
-      };
+      }
     default:
-      return state;
+      return state
   }
 }
 

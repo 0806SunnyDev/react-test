@@ -70,10 +70,10 @@ const register = async (req, res) => {
       key.SECRET_KEY,
       { expiresIn: '1h' },
       (err, token) => {
-        if (err) throw err;
-        res.json({ token: 'Bearer ' + token, success: true });
+        if (err) throw err
+        res.json({ token: 'Bearer ' + token, success: true })
       }
-    );
+    )
   } catch (err) {
     console.error(err.message)
     res.status(500).send('Server error')
@@ -115,10 +115,10 @@ const login = async (req, res) => {
       key.SECRET_KEY,
       { expiresIn: '1h' },
       (err, token) => {
-        if (err) throw err;
-        res.json({ token: 'Bearer ' + token, success: true });
+        if (err) throw err
+        res.json({ token: 'Bearer ' + token, success: true })
       }
-    );
+    )
   } catch (err) {
     console.error(err.message)
     res.status(500).send('Server error')

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
-import CarouselComponent from '../../components/CarouselComponent'
+import CarouselComponent from '../components/CarouselComponent'
 import { useSelector } from 'react-redux'
 import { Avatar } from '@mui/material'
 
@@ -14,7 +14,7 @@ const Profile = () => {
   const avatar = clientData?.Avatar
 
   useEffect(()=>{
-    console.log(user, clientData, photo);
+    console.log(user, clientData, photo)
   },[user, clientData, photo])
   return (
     <main>

@@ -1,5 +1,5 @@
-import React from 'react';
-import { Grid, Button } from '@mui/material';
+import React from 'react'
+import { Grid, Button } from '@mui/material'
 
 const SelectedPhotos = ({ photos, handleDeleteClick }) => {
   return (
@@ -24,7 +24,7 @@ const SelectedPhotos = ({ photos, handleDeleteClick }) => {
         </div>
       ))}
     </Grid>
-  );
-};
+  )
+}
 
-export default SelectedPhotos;
+export default SelectedPhotos

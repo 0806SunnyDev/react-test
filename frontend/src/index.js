@@ -9,7 +9,7 @@ const rootElement = document.getElementById('root')
 const root = createRoot(rootElement) // createRoot(container!) if you use TypeScript
 
 root.render(
-  <Provider store={store()}>
+  <Provider store={store}>
     <Router>
       <App />
     </Router>

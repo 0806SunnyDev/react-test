@@ -1,3 +1,3 @@
-export * from './create-store'
+export * from './store'
 export * from './reducers'
 export * from './actions'
