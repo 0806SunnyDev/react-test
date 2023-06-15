@@ -5,34 +5,42 @@ import Box from '@mui/material/Box'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
-import { login } from '../store'
+import LoginForm from '../components/LoginFormComponent'
 import { formValidator } from '../utils/formValidator'
 import { checkValidate } from '../utils/checkValidate'
-import LoginForm from '../components/LoginFormComponent'
+import { login } from '../store'
 
 const Login = () => {
   const dispatch = useDispatch()
 
-  const [formData, setFormData] = useState({})
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  })
 
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState({
+    email: '',
+    password: ''
+  })
 
-  const handleChange = (event) => {
+  const handleChange = event => {
     const { name, value } = event.target
-    setFormData((prevFormData) => ({
+    setFormData(prevFormData => ({
       ...prevFormData,
       [name]: value,
     }))
 
-    setErrors(formValidator(formData))
+    setErrors(prevErrors => ({
+      ...prevErrors,
+      ...formValidator(name, value)
+    }))
   }
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async event => {
     event.preventDefault()
-    const formIsValid = checkValidate(errors)
+    const formIsValid = checkValidate(formData)
 
     if (formIsValid) {
-      console.log('formData: ', formData)
       await dispatch(login(formData))
     }
   }

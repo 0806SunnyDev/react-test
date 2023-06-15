@@ -1,21 +1,14 @@
-import * as React from 'react'
-import { Navigate, Route, Routes } from 'react-router-dom'
-import Login from '../pages/Login'
-import Register from '../pages/Register'
-import Main from '../pages/Main'
+import React from 'react'
+import { Navigate, useOutlet } from 'react-router-dom'
 
 const Landing = ({isAuthenticated}) => {
+  const outlet = useOutlet()
+
   if (isAuthenticated) {
     return <Navigate to="/profile" />
   }
 
-  return (
-    <Routes>
-      <Route path='/' element={<Main />} />
-      <Route path='/register' element={<Register />} />
-      <Route path='/login' element={<Login />} />
-    </Routes>
-  )
+  return outlet
 }
 
 export default Landing

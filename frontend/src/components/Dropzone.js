@@ -1,44 +1,23 @@
+import React from 'react'
+import { useDropzone } from 'react-dropzone'
 import {
   Grid, 
   Typography, 
   Button, 
 } from '@mui/material'
-import React, { useCallback } from 'react'
-import { useDropzone } from 'react-dropzone'
-import { formValidator } from '../utils/formValidator'
+
 
 const Dropzone = ({
   formData,
-  setFormData,
   errors,
-  setErrors,
+  onDrop,
+  handlePhotoDeleteClick,
 }) => {
-  const onDrop = useCallback((acceptedFiles) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      photos: [...prevData.photos, ...acceptedFiles],
-    }))
-  
-    setErrors(formValidator(formData))
-  }, [])
-  
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
-  
-  const handleRemovePhoto = (index) => {
-    setFormData((prevData) => {
-      const updatedPhotos = [...prevData.photos]
-      updatedPhotos.splice(index, 1)
-      return {
-        ...prevData,
-        photos: updatedPhotos,
-      }
-    })
-  }
-  
-  const handleDeleteClick = (event, index) => {
-    event.stopPropagation()
-    handleRemovePhoto(index)
-  }
+  const {
+    getRootProps,
+    getInputProps,
+    isDragActive 
+  } = useDropzone({ onDrop })
 
   return (
     <div
@@ -73,7 +52,7 @@ const Dropzone = ({
                 <Button
                   variant="contained"
                   size="small"
-                  onClick={(event) => handleDeleteClick(event, index)}
+                  onClick={(event) => handlePhotoDeleteClick(event, index)}
                   style={{
                     position: 'absolute',
                     bottom: '0',

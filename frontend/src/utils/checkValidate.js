@@ -1,9 +1,10 @@
-export const checkValidate = errors => {
-  let result = true
+import { formValidator } from "./formValidator"
 
-  Object.values(errors).map(error => {
-    error && (result = false);
-  })
+export const checkValidate = (formData) => {
+  let errorArr = Object.entries(formData).map(data => formValidator(data[0], data[1]))
 
-  return result
+  let flags = errorArr.map(error => Object.values(error)[0] === null ? true : false)
+
+  let result = flags.find(flag => !flag)
+  return result === false ? result : true
 }

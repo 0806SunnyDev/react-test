@@ -1,68 +1,113 @@
+import React, { useCallback, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import {
   Container, 
   Box, 
   Typography, 
   Avatar, 
 } from '@mui/material'
-import React, { useState } from 'react'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-import { useDispatch } from 'react-redux'
-import { register } from '../store'
+
+import RegisterForm from '../components/RegisterFormComponent'
 import { formValidator } from '../utils/formValidator'
 import { checkValidate } from '../utils/checkValidate'
-import RegisterForm from '../components/RegisterFormComponent'
+import { register } from '../store'
 
 const Register = () => {
   const dispatch = useDispatch()
 
   const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
     photos: []
   })
 
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    photos: ''
+  })
 
-  const handleChange = (event) => {
+  const onDrop = useCallback(acceptedFiles => {
+    setFormData(prevData => ({
+      ...prevData,
+      photos: [...prevData.photos, ...acceptedFiles],
+    }))
+  
+    setErrors(prevErrors => ({
+      ...prevErrors,
+      ...formValidator("photos", acceptedFiles )
+    }))
+  }, [setFormData, setErrors])
+
+  const handleRemovePhoto = index => {
+    setFormData(prevData => {
+      const updatedPhotos = [...prevData.photos]
+      updatedPhotos.splice(index, 1)
+      return {
+        ...prevData,
+        photos: updatedPhotos,
+      }
+    })
+  }
+  
+  const handlePhotoDeleteClick = (event, index) => {
+    event.stopPropagation()
+    handleRemovePhoto(index)
+  }
+
+  const handleChange = event => {
     const { name, value } = event.target
+
     if (name !== 'photos') {
       setFormData((prevData) => ({
         ...prevData,
         [name]: value,
       }))
-      setErrors(formValidator(formData))
-    }
 
-    console.log('errors: ', errors)
+      setErrors(prevErrors => ({
+        ...prevErrors,
+        ...formValidator(name, value)
+      }))
+    }
   }
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async event => {
     event.preventDefault()
-    const formIsValid = checkValidate()
+    const formIsValid = checkValidate(formData)
+    console.log('Form Data => ', formData)
+    console.log(formIsValid)
+
     if (formData.password !== formData.confirmPassword) {
       let errorMessage = 'Password does not match!'
 
-      setErrors((prevErrors) => ({
+      setErrors(prevErrors => ({
         ...prevErrors,
         password: errorMessage,
         confirmPassword: errorMessage,
       }))
 
-      setFormData((prevData) => ({
+      setFormData(prevData => ({
         ...prevData,
         confirmPassword: '',
       }))
     } else if (formIsValid) {
       const data = new FormData()
+
       data.append('firstName', formData.firstName)
       data.append('lastName', formData.lastName)
       data.append('email', formData.email)
       data.append('password', formData.password)
 
-      for (let i = 0; i < formData.photos.length; i++) {
-        data.append('photos', formData.photos[i])
-      }
+      formData.photos.map(photo => data.append('photos', photo))
+
       dispatch(register(data))
-    } else {
-      console.log("Form Error")
     }
   }
 
@@ -84,10 +129,11 @@ const Register = () => {
         </Typography>
         <RegisterForm
           formData={formData}
-          setFormData={setFormData}
           errors={errors}
           setErrors={setErrors}
           handleChange={handleChange}
+          onDrop={onDrop}
+          handlePhotoDeleteClick={handlePhotoDeleteClick}
           handleSubmit={handleSubmit}
         />
       </Box>

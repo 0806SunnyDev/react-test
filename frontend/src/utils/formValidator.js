@@ -8,36 +8,32 @@ const containsNumber = password => {
   return numberRegex.test(password)
 }
 
-const validateField = (title, value) => {
+const validateField = (fieldName, fieldValue) => {
   let errorMessage = ''
-  
-  if (!value) {
-    errorMessage = "This field is required"
-  }
 
-  switch (title) {
-    case "fistName":
+  switch (fieldName) {
+    case "firstName":
     case "lastName":
-      if (value.length < 2 || value.length > 25) {
+      if (fieldValue.length < 2 || fieldValue.length > 25) {
         errorMessage = "This field must be at between 2 and 25"
       }
       break;
     case "email":
-      if (!isValidEmail(value)) {
+      if (!isValidEmail(fieldValue)) {
         errorMessage = "Invalid email address"
       }
       break;
-    case "password":
-    case "confirmPassword":
-      if (value.length < 6) {
+      case "password":
+      case "confirmPassword":
+      if (fieldValue.length < 6) {
         errorMessage = "Password case number is at least 6"
       }
-      if (!containsNumber(value)) {
+      if (!containsNumber(fieldValue)) {
         errorMessage = "Password must includes at least 1 number"
       }
       break;
     case "photos":
-      if (value.length < 4) {
+      if (fieldValue.length < 4) {
         errorMessage = "Photo number must be at least 4"
       }
       break;
@@ -45,15 +41,18 @@ const validateField = (title, value) => {
       break;
   }
 
+  if (!fieldValue) {
+    errorMessage = "This field is required"
+  }
+
   return (errorMessage !== '') ? errorMessage : null
 }
 
-export const formValidator = formData => {
-  let errors = {}
-  Object.entries(formData).map(data => {
-    let error = validateField(data[0], data[1]);
-    (error) && Object.assign(errors, { [data[0]]: error });
-  })
-
-  return errors
+export const formValidator = (name, value) => {
+  let error = {}
+  
+  if (name) {
+    error[name] = validateField(name, value)
+    return error
+  }
 }

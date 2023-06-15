@@ -6,14 +6,16 @@ import {
   Link 
 } from '@mui/material'
 import React from 'react'
+
 import Dropzone from './Dropzone'
 
 const RegisterForm = ({
   formData,
-  setFormData,
   errors,
   setErrors,
   handleChange,
+  onDrop,
+  handlePhotoDeleteClick,
   handleSubmit,
 }) => {
   return (
@@ -81,9 +83,9 @@ const RegisterForm = ({
         <Grid item xs={12}>
           <Dropzone
             formData={formData}
-            setFormData={setFormData}
             errors={errors}
-            setErrors={setErrors}
+            onDrop={onDrop}
+            handlePhotoDeleteClick={handlePhotoDeleteClick}
           />
         </Grid>
         <Grid item xs={12}>

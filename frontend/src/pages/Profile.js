@@ -1,21 +1,16 @@
-import React, { useEffect } from 'react'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import Container from '@mui/material/Container'
-import CarouselComponent from '../components/CarouselComponent'
+import React from 'react'
 import { useSelector } from 'react-redux'
-import { Avatar } from '@mui/material'
+import { Container, Typography, Box, Avatar } from '@mui/material'
+
+import CarouselComponent from '../components/CarouselComponent'
 
 const Profile = () => {
-  const user = useSelector((state) => state.auth.user?.data?.user)
-  const clientData = useSelector((state) => state.auth.user?.data?.clientData)
-  const photo = useSelector((state) => state.auth.user?.data?.photo)
+  const user = useSelector(state => state.auth.user?.data?.user)
+  const clientData = useSelector(state => state.auth.user?.data?.clientData)
+  const photo = useSelector(state => state.auth.user?.data?.photo)
   
   const avatar = clientData?.Avatar
 
-  useEffect(()=>{
-    console.log(user, clientData, photo)
-  },[user, clientData, photo])
   return (
     <main>
       <Box
@@ -36,10 +31,10 @@ const Profile = () => {
         >
           <Avatar
             sx={{
-              width: 70,
-              height: 70,
+              width: 80,
+              height: 80,
               bgcolor: 'primary.main',
-              border: '7px solid #1976d2'
+              border: '4px solid #1976d2'
             }}
             src={avatar}
             alt='avatar'
